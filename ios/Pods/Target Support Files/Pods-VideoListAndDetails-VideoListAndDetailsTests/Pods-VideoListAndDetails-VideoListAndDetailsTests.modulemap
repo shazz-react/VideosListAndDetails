@@ -1,0 +1,6 @@
+module Pods_VideoListAndDetails_VideoListAndDetailsTests {
+  umbrella header "Pods-VideoListAndDetails-VideoListAndDetailsTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
