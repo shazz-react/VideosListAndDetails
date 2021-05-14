@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   StyleSheet,
@@ -25,35 +25,10 @@ const ListCell = (props) => {
           style={styles.image}
           source={{ uri: videoThumbnail }}
           resizeMode="cover"
-        ></ImageBackground>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            width: "100%",
-            paddingTop: 10,
-          }}
-        >
-          <Text
-            style={{
-              color: "#53354a",
-              fontSize: 15,
-              fontWeight: "600",
-              paddingBottom: 8,
-              paddingHorizontal: 5,
-              alignSelf: "flex-start",
-              width: "90%",
-            }}
-          >
-            {title.toUpperCase()}
-          </Text>
-          <View
-            style={{
-              width: "10%",
-              alignItems: "flex-end",
-              paddingRight: 3,
-            }}
-          >
+        />
+        <View style={styles.titleRowContainer}>
+          <Text style={styles.titleText}>{title.toUpperCase()}</Text>
+          <View style={styles.bookmarkContainer}>
             <TouchableOpacity
               onPress={() => {
                 props.onBookmark(id);
@@ -68,53 +43,11 @@ const ListCell = (props) => {
             </TouchableOpacity>
           </View>
         </View>
-
-        <View
-          style={{
-            backgroundColor: "#ff577f",
-            height: 20,
-            marginHorizontal: 5,
-            paddingHorizontal: 10,
-            alignSelf: "flex-start",
-            justifyContent: "center",
-            alignContent: "center",
-          }}
-        >
-          <Text
-            style={{
-              color: "white",
-              fontSize: 13,
-              fontWeight: "600",
-              alignSelf: "flex-start",
-            }}
-          >
-            By: {authorName}
-          </Text>
+        <View style={styles.autherTextContainer}>
+          <Text style={styles.autherText}>By: {authorName}</Text>
         </View>
-
-        <Text
-          style={{
-            color: "#f0a500",
-            fontSize: 12,
-            paddingVertical: 10,
-            paddingHorizontal: 5,
-          }}
-        >
-          {viewCount} views
-        </Text>
-
-        <Text
-          style={{
-            color: "#8e7f7f",
-            paddingHorizontal: 5,
-            paddingBottom: 10,
-            paddingTop: 1,
-            fontSize: 12,
-            alignSelf: "flex-start",
-          }}
-        >
-          {description}
-        </Text>
+        <Text style={styles.viewsText}>{viewCount} views</Text>
+        <Text style={styles.descriptionText}>{description}</Text>
       </TouchableComponent>
     </View>
   );
@@ -147,11 +80,60 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 4,
   },
+  titleRowContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    paddingTop: 10,
+  },
+  titleText: {
+    color: "#53354a",
+    fontSize: 15,
+    fontWeight: "600",
+    paddingBottom: 8,
+    paddingHorizontal: 5,
+    alignSelf: "flex-start",
+    width: "90%",
+  },
+  bookmarkContainer: {
+    width: "10%",
+    alignItems: "flex-end",
+    paddingRight: 3,
+  },
   textContainer: {
     justifyContent: "flex-end",
     alignItems: "flex-start",
     height: 100,
     width: "100%",
+  },
+  autherTextContainer: {
+    backgroundColor: "#ff577f",
+    height: 20,
+    marginHorizontal: 5,
+    paddingHorizontal: 10,
+    alignSelf: "flex-start",
+    justifyContent: "center",
+    alignContent: "center",
+  },
+  autherText: {
+    color: "white",
+    fontSize: 13,
+    fontWeight: "600",
+    alignSelf: "flex-start",
+  },
+  viewsText: {
+    color: "#f0a500",
+    fontSize: 12,
+    paddingVertical: 10,
+    paddingHorizontal: 5,
+  },
+  descriptionText: {
+    color: "#8e7f7f",
+    paddingHorizontal: 5,
+    paddingBottom: 10,
+    paddingTop: 1,
+    fontSize: 12,
+    alignSelf: "flex-start",
   },
 });
 
