@@ -6,11 +6,17 @@ import rootSaga from "./src/store/saga/videosSaga";
 import videosReducer from "./src/store/reducers/videosReducer";
 import { SafeAreaView } from "react-native";
 import Navigator from "./src/Navigation/Navigator";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import Icon from "react-native-vector-icons/Entypo";
 import Octicon from "react-native-vector-icons/Octicons";
+import Fontisto from "react-native-vector-icons/Fontisto";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 Icon.loadFont();
 Octicon.loadFont();
+Fontisto.loadFont();
+MaterialIcons.loadFont();
+MaterialCommunityIcons.loadFont();
 
 const App = () => {
   const rootReducer = combineReducers({ videoList: videosReducer });

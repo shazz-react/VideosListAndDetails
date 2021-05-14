@@ -7,7 +7,15 @@ import {
   ImageBackground,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import Fontisto from "react-native-vector-icons/Fontisto";
+import Icon from "react-native-vector-icons/Entypo";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import {
+  primaryColor,
+  goldenColor,
+  titleColor,
+  subtitleColor,
+} from "../Constants/Colors";
 
 const ListCell = (props) => {
   const { title, videoThumbnail, description, viewCount, authorName, id } =
@@ -34,19 +42,22 @@ const ListCell = (props) => {
                 props.onBookmark(id);
               }}
             >
-              <Icon
-                name={
-                  props.isBookmarked ? "bookmark-check" : "bookmark-outline"
-                }
-                size={30}
+              <Fontisto
+                name={props.isBookmarked ? "bookmark-alt" : "bookmark"}
+                size={25}
+                color={primaryColor}
               />
             </TouchableOpacity>
           </View>
         </View>
         <View style={styles.autherTextContainer}>
-          <Text style={styles.autherText}>By: {authorName}</Text>
+          <MaterialCommunityIcons name={"pen"} size={15} color={"white"} />
+          <Text style={styles.autherText}>{authorName}</Text>
         </View>
-        <Text style={styles.viewsText}>{viewCount} views</Text>
+        <View style={styles.viewsContainer}>
+          <Icon name={"eye"} size={15} color={goldenColor} />
+          <Text style={styles.viewsText}>{viewCount}</Text>
+        </View>
         <Text style={styles.descriptionText}>{description}</Text>
       </TouchableComponent>
     </View>
@@ -62,7 +73,15 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     width: "100%",
     padding: 10,
-    marginBottom: 10,
+    marginBottom: 20,
+    shadowColor: "black",
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.4,
+    shadowRadius: 3,
+    elevation: 2,
   },
   image: {
     flex: 1,
@@ -76,8 +95,8 @@ const styles = StyleSheet.create({
       width: 3,
       height: 3,
     },
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
+    shadowOpacity: 0.4,
+    shadowRadius: 4,
     elevation: 4,
   },
   titleRowContainer: {
@@ -87,7 +106,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   titleText: {
-    color: "#53354a",
+    color: titleColor,
     fontSize: 15,
     fontWeight: "600",
     paddingBottom: 8,
@@ -107,28 +126,36 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   autherTextContainer: {
-    backgroundColor: "#ff577f",
+    flexDirection: "row",
+    backgroundColor: primaryColor,
     height: 20,
     marginHorizontal: 5,
     paddingHorizontal: 10,
     alignSelf: "flex-start",
     justifyContent: "center",
     alignContent: "center",
+    alignItems: "center",
   },
   autherText: {
     color: "white",
     fontSize: 13,
     fontWeight: "600",
-    alignSelf: "flex-start",
+    marginLeft: 4,
+  },
+  viewsContainer: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    marginLeft: 5,
   },
   viewsText: {
-    color: "#f0a500",
+    color: goldenColor,
     fontSize: 12,
     paddingVertical: 10,
     paddingHorizontal: 5,
   },
   descriptionText: {
-    color: "#8e7f7f",
+    color: subtitleColor,
     paddingHorizontal: 5,
     paddingBottom: 10,
     paddingTop: 1,
