@@ -7,7 +7,8 @@ import BookmarksScreen from "../Screens/BoomarksScreen";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Octicon from "react-native-vector-icons/Octicons";
-import { Text } from "react-native";
+import { Text, Switch, SafeAreaView } from "react-native";
+import { useTheme } from "../themes";
 import {
   titleColor,
   primaryColor,
@@ -19,13 +20,29 @@ const StackNavigator = createStackNavigator();
 const TabNavigator = createBottomTabNavigator();
 
 const FeedStack = () => {
+  const theme = useTheme();
+  const headerColor = theme.mode === "light" ? titleColor : "white";
+  const backgroundColor = theme.mode === "light" ? "white" : "black";
   return (
     <StackNavigator.Navigator
       screenOptions={{
-        headerTintColor: titleColor,
+        headerTintColor: headerColor,
         headerTitleStyle: {
           fontWeight: "bold",
         },
+        headerStyle: {
+          backgroundColor: backgroundColor,
+          shadowColor: "transparent",
+        },
+        headerRight: () => (
+          <Switch
+            style={{ marginRight: 10 }}
+            value={theme.mode === "dark"}
+            trackColor={{ false: "white", true: primaryColor }}
+            thumbColor={"black"}
+            onValueChange={(value) => theme.setMode(value ? "dark" : "light")}
+          />
+        ),
       }}
     >
       <StackNavigator.Screen
@@ -47,12 +64,19 @@ const FeedStack = () => {
 };
 
 const BookmarkStack = () => {
+  const theme = useTheme();
+  const headerColor = theme.mode === "light" ? titleColor : "white";
+  const backgroundColor = theme.mode === "light" ? "white" : "black";
   return (
     <StackNavigator.Navigator
       screenOptions={{
-        headerTintColor: titleColor,
+        headerTintColor: headerColor,
         headerTitleStyle: {
           fontWeight: "bold",
+        },
+        headerStyle: {
+          backgroundColor: backgroundColor,
+          shadowColor: "transparent",
         },
       }}
     >
@@ -75,45 +99,58 @@ const BookmarkStack = () => {
 };
 
 const Navigator = () => {
+  const theme = useTheme();
+  const backgroundColor = theme.mode === "light" ? "white" : "black";
   return (
-    <NavigationContainer>
-      <TabNavigator.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-            let iconColor;
-            if (route.name === "My Feed") {
-              iconName = "home";
-              iconColor = focused ? primaryColor : inactiveTintColor;
-            } else if (route.name === "Bookmarks") {
-              iconName = "bookmark";
-              iconColor = focused ? secondaryColor : inactiveTintColor;
-            }
-            return <Octicon name={iconName} size={size} color={iconColor} />;
-          },
-          tabBarLabel: ({ focused }) => {
-            let labelText;
-            let textColor;
-            if (route.name === "My Feed") {
-              labelText = "My Feed";
-              textColor = focused ? primaryColor : inactiveTintColor;
-            } else if (route.name === "Bookmarks") {
-              labelText = "Bookmarks";
-              textColor = focused ? secondaryColor : inactiveTintColor;
-            }
-            return (
-              <Text style={{ color: textColor, fontSize: 10 }}>
-                {labelText}
-              </Text>
-            );
-          },
-        })}
-        tabBarOptions={{}}
-      >
-        <TabNavigator.Screen name="My Feed" component={FeedStack} />
-        <TabNavigator.Screen name="Bookmarks" component={BookmarkStack} />
-      </TabNavigator.Navigator>
-    </NavigationContainer>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: backgroundColor,
+      }}
+    >
+      <NavigationContainer>
+        <TabNavigator.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              let iconName;
+              let iconColor;
+              if (route.name === "My Feed") {
+                iconName = "home";
+                iconColor = focused ? primaryColor : inactiveTintColor;
+              } else if (route.name === "Bookmarks") {
+                iconName = "bookmark";
+                iconColor = focused ? secondaryColor : inactiveTintColor;
+              }
+              return <Octicon name={iconName} size={size} color={iconColor} />;
+            },
+            tabBarLabel: ({ focused }) => {
+              let labelText;
+              let textColor;
+              if (route.name === "My Feed") {
+                labelText = "My Feed";
+                textColor = focused ? primaryColor : inactiveTintColor;
+              } else if (route.name === "Bookmarks") {
+                labelText = "Bookmarks";
+                textColor = focused ? secondaryColor : inactiveTintColor;
+              }
+              return (
+                <Text style={{ color: textColor, fontSize: 10 }}>
+                  {labelText}
+                </Text>
+              );
+            },
+          })}
+          tabBarOptions={{
+            activeBackgroundColor: backgroundColor,
+            inactiveBackgroundColor: backgroundColor,
+            style: { borderTopWidth: 0 },
+          }}
+        >
+          <TabNavigator.Screen name="My Feed" component={FeedStack} />
+          <TabNavigator.Screen name="Bookmarks" component={BookmarkStack} />
+        </TabNavigator.Navigator>
+      </NavigationContainer>
+    </SafeAreaView>
   );
 };
 

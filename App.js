@@ -4,8 +4,8 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "./src/store/saga/videosSaga";
 import videosReducer from "./src/store/reducers/videosReducer";
-import { SafeAreaView } from "react-native";
 import Navigator from "./src/Navigation/Navigator";
+import ThemeManager from "./src/themes";
 import Icon from "react-native-vector-icons/Entypo";
 import Octicon from "react-native-vector-icons/Octicons";
 import Fontisto from "react-native-vector-icons/Fontisto";
@@ -25,11 +25,11 @@ const App = () => {
   middleWare.run(rootSaga);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <ThemeManager>
       <Provider store={store}>
         <Navigator />
       </Provider>
-    </SafeAreaView>
+    </ThemeManager>
   );
 };
 

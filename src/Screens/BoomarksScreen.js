@@ -5,7 +5,7 @@ import { bookmarkVideo } from "../store/actions/videosAction";
 import BookmarkCell from "../Components/BookmarkCell";
 import ListComponent from "../Components/ListComponent";
 import Octicon from "react-native-vector-icons/Octicons";
-import { inactiveTintColor } from "../Constants/Colors";
+import styled from "styled-components/native";
 
 const mapStateToProps = (state) => {
   console.log("mapStateToProps bookmarks - " + state.videoList.bookmarks);
@@ -39,30 +39,32 @@ const BookmarkScreen = (props) => {
   };
 
   return bookmarkedVideos.length <= 0 ? (
-    <View style={styles.container}>
-      <Octicon name={"bookmark"} size={55} color={inactiveTintColor} />
-      <Text style={{ color: inactiveTintColor, margin: 10, fontSize: 16 }}>
-        Add some bookmarks
-      </Text>
-    </View>
+    <Container>
+      <NoBookmarkIcon name={"bookmark"} size={55} />
+      <NoBookmarkText>Add some bookmarks</NoBookmarkText>
+    </Container>
   ) : (
-    <View style={styles.container}>
-      <ListComponent
-        data={bookmarkedVideos}
-        renderListItem={renderListItem}
-        styles={{ flex: 1, width: "90%", padding: 10 }}
-      />
-    </View>
+    <Container>
+      <ListComponent data={bookmarkedVideos} renderListItem={renderListItem} />
+    </Container>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-  },
-});
+const Container = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: ${(props) => props.theme.backgroundColor};
+`;
+
+const NoBookmarkIcon = styled(Octicon)`
+  color: ${(props) => props.theme.noDataColor};
+`;
+
+const NoBookmarkText = styled.Text`
+  margin: 10px;
+  font-size: 16px;
+  color: ${(props) => props.theme.noDataColor};
+`;
 
 export default connect(mapStateToProps)(BookmarkScreen);

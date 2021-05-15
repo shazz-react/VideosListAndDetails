@@ -1,21 +1,11 @@
 import React from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  TouchableNativeFeedback,
-  ImageBackground,
-} from "react-native";
+import { TouchableNativeFeedback, Platform } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import styled from "styled-components/native";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import Icon from "react-native-vector-icons/Entypo";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import {
-  primaryColor,
-  goldenColor,
-  titleColor,
-  subtitleColor,
-} from "../Constants/Colors";
+import { primaryColor, goldenColor } from "../Constants/Colors";
 
 const ListCell = (props) => {
   const { title, videoThumbnail, description, viewCount, authorName, id } =
@@ -27,16 +17,12 @@ const ListCell = (props) => {
   }
 
   return (
-    <View style={styles.container}>
-      <TouchableComponent onPress={props.onPress}>
-        <ImageBackground
-          style={styles.image}
-          source={{ uri: videoThumbnail }}
-          resizeMode="cover"
-        />
-        <View style={styles.titleRowContainer}>
-          <Text style={styles.titleText}>{title.toUpperCase()}</Text>
-          <View style={styles.bookmarkContainer}>
+    <TouchableComponent onPress={props.onPress}>
+      <Container>
+        <VideoThumbnail source={{ uri: videoThumbnail }} resizeMode="cover" />
+        <TitleRowContainer>
+          <Title>{title.toUpperCase()}</Title>
+          <Bookmark>
             <TouchableOpacity
               onPress={() => {
                 props.onBookmark(id);
@@ -48,120 +34,115 @@ const ListCell = (props) => {
                 color={primaryColor}
               />
             </TouchableOpacity>
-          </View>
-        </View>
-        <View style={styles.autherTextContainer}>
+          </Bookmark>
+        </TitleRowContainer>
+        <AuthorContainer>
           <MaterialCommunityIcons name={"pen"} size={15} color={"white"} />
-          <Text style={styles.autherText}>{authorName}</Text>
-        </View>
-        <View style={styles.viewsContainer}>
+          <AutherText>{authorName}</AutherText>
+        </AuthorContainer>
+        <ViewsContainer>
           <Icon name={"eye"} size={15} color={goldenColor} />
-          <Text style={styles.viewsText}>{viewCount}</Text>
-        </View>
-        <Text style={styles.descriptionText}>{description}</Text>
-      </TouchableComponent>
-    </View>
+          <ViewsCount>{viewCount}</ViewsCount>
+        </ViewsContainer>
+        <Description>{description}</Description>
+      </Container>
+    </TouchableComponent>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    height: 340,
-    backgroundColor: "white",
-    width: "100%",
-    padding: 10,
-    marginBottom: 20,
-    shadowColor: "black",
-    shadowOffset: {
-      width: 2,
-      height: 2,
-    },
-    shadowOpacity: 0.4,
-    shadowRadius: 3,
-    elevation: 2,
-  },
-  image: {
-    flex: 1,
-    justifyContent: "flex-end",
-    alignItems: "flex-start",
-    height: "100%",
-    width: "100%",
-    paddingBottom: 5,
-    shadowColor: "black",
-    shadowOffset: {
-      width: 3,
-      height: 3,
-    },
-    shadowOpacity: 0.4,
-    shadowRadius: 4,
-    elevation: 4,
-  },
-  titleRowContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "100%",
-    paddingTop: 10,
-  },
-  titleText: {
-    color: titleColor,
-    fontSize: 15,
-    fontWeight: "600",
-    paddingBottom: 8,
-    paddingHorizontal: 5,
-    alignSelf: "flex-start",
-    width: "90%",
-  },
-  bookmarkContainer: {
-    width: "10%",
-    alignItems: "flex-end",
-    paddingRight: 3,
-  },
-  textContainer: {
-    justifyContent: "flex-end",
-    alignItems: "flex-start",
-    height: 100,
-    width: "100%",
-  },
-  autherTextContainer: {
-    flexDirection: "row",
-    backgroundColor: primaryColor,
-    height: 20,
-    marginHorizontal: 5,
-    paddingHorizontal: 10,
-    alignSelf: "flex-start",
-    justifyContent: "center",
-    alignContent: "center",
-    alignItems: "center",
-  },
-  autherText: {
-    color: "white",
-    fontSize: 13,
-    fontWeight: "600",
-    marginLeft: 4,
-  },
-  viewsContainer: {
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    marginLeft: 5,
-  },
-  viewsText: {
-    color: goldenColor,
-    fontSize: 12,
-    paddingVertical: 10,
-    paddingHorizontal: 5,
-  },
-  descriptionText: {
-    color: subtitleColor,
-    paddingHorizontal: 5,
-    paddingBottom: 10,
-    paddingTop: 1,
-    fontSize: 12,
-    alignSelf: "flex-start",
-  },
-});
+const Container = styled.View`
+  flex: 1 auto;
+  justify-content: center;
+  align-items: center;
+  height: 340px;
+  background-color: ${(props) => props.theme.backgroundColor};
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  shadow-color: ${(props) => props.theme.shadowColor};
+  shadow-offset: 2px 2px;
+  shadow-opacity: 0.4;
+  shadow-radius: 3px;
+  elevation: 2;
+`;
+
+const VideoThumbnail = styled.ImageBackground`
+  flex: 1;
+  justify-content: flex-end;
+  align-items: flex-start;
+  height: 100%;
+  width: 100%;
+  padding-bottom: 5px;
+  shadow-color: black;
+  shadow-offset: 3px 3px;
+  shadow-opacity: 0.4;
+  shadow-radius: 4px;
+  elevation: 4;
+`;
+
+const TitleRowContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding-top: 10px;
+`;
+
+const Title = styled.Text`
+  color: ${(props) => props.theme.titleColor};
+  font-size: 15px;
+  font-weight: 600;
+  padding-bottom: 8px;
+  padding-horizontal: 5px;
+  align-self: flex-start;
+  width: 90%;
+`;
+
+const Bookmark = styled.View`
+  width: 10%;
+  align-items: flex-end;
+  padding-right: 3px;
+`;
+
+const AuthorContainer = styled.View`
+  flex-direction: row;
+  background-color: ${(props) => props.theme.primaryColor};
+  height: 20px;
+  margin-horizontal: 5px;
+  padding-horizontal: 10px;
+  align-self: flex-start;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+`;
+
+const AutherText = styled.Text`
+  color: ${(props) => props.theme.authorName};
+  font-size: 13px;
+  font-weight: 600;
+  margin-left: 4px;
+`;
+
+const ViewsContainer = styled.View`
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: 5px;
+`;
+
+const ViewsCount = styled.Text`
+  color: ${(props) => props.theme.viewsColor};
+  font-size: 12px;
+  padding-vertical: 10px;
+  padding-horizontal: 5px;
+`;
+
+const Description = styled.Text`
+  color: ${(props) => props.theme.descriptionColor};
+  padding-horizontal: 5px;
+  padding-bottom: 10px;
+  padding-top: 1px;
+  font-size: 12px;
+  align-self: flex-start;
+`;
 
 export default ListCell;

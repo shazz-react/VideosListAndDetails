@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import styled from "styled-components/native";
 import { useDispatch, connect, useSelector } from "react-redux";
 import { fetchVideos, bookmarkVideo } from "../store/actions/videosAction";
 import ListCell from "../Components/ListCell";
 import ListComponent from "../Components/ListComponent";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { inactiveTintColor } from "../Constants/Colors";
 
 const mapStateToProps = (state) => {
   console.log("mapStateToProps videos - " + state.videoList.videos);
@@ -49,30 +48,35 @@ const VideosListScreen = (props) => {
   };
 
   return props.videoList.videos.length <= 0 ? (
-    <View style={styles.container}>
-      <MaterialIcons name={"article"} size={55} color={inactiveTintColor} />
-      <Text style={{ color: inactiveTintColor, margin: 10, fontSize: 16 }}>
-        No article available
-      </Text>
-    </View>
+    <Container>
+      <NoArticleIcon name={"article"} size={55} />
+      <NoArticleText>No article available</NoArticleText>
+    </Container>
   ) : (
-    <View style={styles.container}>
+    <Container>
       <ListComponent
         data={props.videoList.videos}
         renderListItem={renderListItem}
-        styles={{ flex: 1, width: "90%", padding: 10 }}
       />
-    </View>
+    </Container>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-  },
-});
+const Container = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: ${(props) => props.theme.backgroundColor};
+`;
+
+const NoArticleIcon = styled(MaterialIcons)`
+  color: ${(props) => props.theme.noDataColor};
+`;
+
+const NoArticleText = styled.Text`
+  margin: 10px;
+  font-size: 16px;
+  color: ${(props) => props.theme.noDataColor};
+`;
 
 export default connect(mapStateToProps)(VideosListScreen);
