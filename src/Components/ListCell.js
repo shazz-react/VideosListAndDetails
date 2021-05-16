@@ -1,6 +1,9 @@
 import React from "react";
-import { TouchableNativeFeedback, Platform } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import {
+  TouchableNativeFeedback,
+  Platform,
+  TouchableOpacity,
+} from "react-native";
 import styled from "styled-components/native";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import Icon from "react-native-vector-icons/Entypo";
@@ -125,6 +128,7 @@ const AutherText = styled.Text`
 const ViewsContainer = styled.View`
   flex-direction: row;
   justify-content: flex-start;
+  align-self: flex-start;
   align-items: center;
   margin-left: 5px;
 `;

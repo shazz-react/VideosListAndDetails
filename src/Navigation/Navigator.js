@@ -23,6 +23,7 @@ const FeedStack = () => {
   const theme = useTheme();
   const headerColor = theme.mode === "light" ? titleColor : "white";
   const backgroundColor = theme.mode === "light" ? "white" : "black";
+  const thumbColor = theme.mode === "light" ? "black" : "white";
   return (
     <StackNavigator.Navigator
       screenOptions={{
@@ -34,15 +35,6 @@ const FeedStack = () => {
           backgroundColor: backgroundColor,
           shadowColor: "transparent",
         },
-        headerRight: () => (
-          <Switch
-            style={{ marginRight: 10 }}
-            value={theme.mode === "dark"}
-            trackColor={{ false: "white", true: primaryColor }}
-            thumbColor={"black"}
-            onValueChange={(value) => theme.setMode(value ? "dark" : "light")}
-          />
-        ),
       }}
     >
       <StackNavigator.Screen
@@ -50,6 +42,15 @@ const FeedStack = () => {
         component={VideosListScreen}
         options={{
           title: "My Feed",
+          headerRight: () => (
+            <Switch
+              style={{ marginRight: 10 }}
+              value={theme.mode === "dark"}
+              trackColor={{ false: "lightgrey", true: primaryColor }}
+              thumbColor={thumbColor}
+              onValueChange={(value) => theme.setMode(value ? "dark" : "light")}
+            />
+          ),
         }}
       />
       <StackNavigator.Screen

@@ -104,6 +104,8 @@ const AutherText = styled.Text`
   font-size: 12px;
   font-weight: 500;
   margin-left: 4px;
+  text-align-vertical: center;
+  include-font-padding: false;
 `;
 
 const ViewsContainer = styled.View`
